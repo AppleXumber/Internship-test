@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*
  * @see Person
  * @see createPerson
  * @see deletePerson
- * @see getSpendingsByPerson
+ * @see getSpendingByPerson
  * @see getPersons
- * @see getSpendings
+ * @see getSpending
  * */
 @RestController
 class PersonController {
@@ -73,7 +73,7 @@ class PersonController {
    * @see PersonServiceRepository.getPersonsSpendingInfos
    * */
   @GetMapping("/persons/{id}/summary")
-  fun getSpendingsByPerson(@PathVariable id: Int): ResponseEntity<Map<String, Any>> {
+  fun getSpendingByPerson(@PathVariable id: Int): ResponseEntity<Map<String, Any>> {
     return ResponseEntity.status(HttpStatus.OK).body(PersonServiceRepository.getSinglePersonSpendingInfos(id))
   }
 
@@ -87,7 +87,7 @@ class PersonController {
    * @see PersonServiceRepository.getPersonsSpendingInfos
    * */
   @GetMapping("/persons/summary")
-  fun getSpendings(): ResponseEntity<Map<String, Any>> {
+  fun getSpending(): ResponseEntity<Map<String, Any>> {
     return ResponseEntity.status(HttpStatus.OK).body(PersonServiceRepository.getPersonsSpendingInfos())
   }
 }

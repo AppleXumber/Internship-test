@@ -59,14 +59,14 @@ object PersonServiceRepository {
     val personTransactions = TransactionServiceRepository.getTransactionsByPerson(id)
     val personExpanses = personTransactions.filter { it.type == Type.DESPESA }.sumOf { it.value }
     val personIncome = personTransactions.filter { it.type == Type.RECEITA }.sumOf { it.value }
-    val personTotalNet = personIncome - personExpanses
+    val personBalance = personIncome - personExpanses
 
     return mapOf(
       "personName" to person.name,
       "personAge" to person.age,
       "personIncome" to personIncome,
       "personExpanses" to personExpanses,
-      "personTotalNet" to personTotalNet
+      "personBalance" to personBalance
     )
   }
 
@@ -80,16 +80,16 @@ object PersonServiceRepository {
    * */
   fun getPersonsSpendingInfos(): Map<String, Any> {
     val persons = getPersons()
-    val personsSpendings = persons.map { getSinglePersonSpendingInfos(it.id) }
-    val totalIncome = personsSpendings.sumOf { it["personIncome"] as Double }
-    val totalExpanses = personsSpendings.sumOf { it["personExpanses"] as Double }
-    val totalNet = totalIncome - totalExpanses
+    val personsSpending = persons.map { getSinglePersonSpendingInfos(it.id) }
+    val totalIncome = personsSpending.sumOf { it["personIncome"] as Double }
+    val totalExpanses = personsSpending.sumOf { it["personExpanses"] as Double }
+    val balance = totalIncome - totalExpanses
 
     return mapOf(
-      "persons" to personsSpendings,
+      "persons" to personsSpending,
       "totalIncome" to totalIncome,
       "totalExpanses" to totalExpanses,
-      "totalNet" to totalNet
+      "balance" to balance
     )
   }
 
